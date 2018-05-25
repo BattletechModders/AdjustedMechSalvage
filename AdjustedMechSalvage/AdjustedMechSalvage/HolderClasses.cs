@@ -1,6 +1,6 @@
 ﻿namespace AdjustedMechSalvage {
     public class Settings {
-        public float RecoveryChance = 0f;
+        public bool ownMechsForFree = false;
     }
 
     public class Fields {
