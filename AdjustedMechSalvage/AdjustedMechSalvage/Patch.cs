@@ -34,22 +34,21 @@ namespace AdjustedMechSalvage {
 
                         float mechparts = simulation.Constants.Story.DefaultMechPartMax;
                         if (mech.IsLocationDestroyed(ChassisLocations.CenterTorso)) {
-                            mechparts = 0;
+                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
                         }
-                        else {
-                            if (mech.IsLocationDestroyed(ChassisLocations.LeftArm)) {
-                                mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
-                            }
-                            if (mech.IsLocationDestroyed(ChassisLocations.RightArm)) {
-                                mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
-                            }
-                            if (mech.IsLocationDestroyed(ChassisLocations.LeftLeg)) {
-                                mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
-                            }
-                            if (mech.IsLocationDestroyed(ChassisLocations.RightLeg)) {
-                                mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
-                            }
+                        if (mech.IsLocationDestroyed(ChassisLocations.LeftArm)) {
+                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
                         }
+                        if (mech.IsLocationDestroyed(ChassisLocations.RightArm)) {
+                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                        }
+                        if (mech.IsLocationDestroyed(ChassisLocations.LeftLeg)) {
+                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                        }
+                        if (mech.IsLocationDestroyed(ChassisLocations.RightLeg)) {
+                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                        }
+
 
                         SalvageDef def = Helper.CreateMechPart(__instance, constants, mech);
                         if (settings.ownMechsForFree) {
@@ -75,7 +74,8 @@ namespace AdjustedMechSalvage {
                                 } });
                                 }
                             }
-                        } else {
+                        }
+                        else {
                             foreach (MechComponentRef mechComponentRef in mech.Inventory) {
                                 if (!mech.IsLocationDestroyed(mechComponentRef.MountedLocation) && mechComponentRef.DamageLevel != ComponentDamageLevel.Destroyed) {
                                     List<SalvageDef> finalPotentialSalvage = (List<SalvageDef>)ReflectionHelper.GetPrivateField(__instance, "finalPotentialSalvage");
@@ -93,27 +93,26 @@ namespace AdjustedMechSalvage {
                     bool flag2 = false;
                     bool flag3 = false;
                     List<SalvageDef> finalPotentialSalvage = (List<SalvageDef>)ReflectionHelper.GetPrivateField(__instance, "finalPotentialSalvage");
-        
+
                     if (pilot.IsIncapacitated || mech2.IsDestroyed) {
                         float mechparts = simulation.Constants.Story.DefaultMechPartMax;
                         if (mech2.IsLocationDestroyed(ChassisLocations.CenterTorso)) {
-                            mechparts = 0;
+                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
                         }
-                        else {
-                            if (mech2.IsLocationDestroyed(ChassisLocations.LeftArm)) {
-                                mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
-                            }
-                            if (mech2.IsLocationDestroyed(ChassisLocations.RightArm)) {
-                                mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
-                            }
-                            if (mech2.IsLocationDestroyed(ChassisLocations.LeftLeg)) {
-                                mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
-                            }
-                            if (mech2.IsLocationDestroyed(ChassisLocations.RightLeg)) {
-                                mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
-                            }
+                        if (mech2.IsLocationDestroyed(ChassisLocations.LeftArm)) {
+                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
                         }
-                        ReflectionHelper.InvokePrivateMethode(__instance, "CreateAndAddMechPart", new object[] { constants, mech2, mechparts, finalPotentialSalvage });
+                        if (mech2.IsLocationDestroyed(ChassisLocations.RightArm)) {
+                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                        }
+                        if (mech2.IsLocationDestroyed(ChassisLocations.LeftLeg)) {
+                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                        }
+                        if (mech2.IsLocationDestroyed(ChassisLocations.RightLeg)) {
+                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                        }
+
+                        ReflectionHelper.InvokePrivateMethode(__instance, "CreateAndAddMechPart", new object[] { constants, mech2, Mathf.RoundToInt(mechparts), finalPotentialSalvage });
                         goto IL_2E4;
                     }
                     IL_4AB:
