@@ -15,15 +15,15 @@ AdjustedMechSalvage is a BattleTech mod (using ModTek) that changes the rules th
 
 ## Example: 
 DefaultMechPartMax is set to 5:
-5 - 1(leftleg destroyed) - 1(Rightleg destroyed) = 3 parts
+- 5 - 1(leftleg destroyed) - 1(Rightleg destroyed) = 3 parts
 
 DefaultMechPartMax is set to 3 or 5:
-CT destroyed, rightleg destroyed = 1 parts
-CT destroyed destroyed = 1 parts
-CT destroyed, rightleg destroyed, leftarm destroyed = 1 parts
+- CT destroyed, rightleg destroyed = 1 parts
+- CT destroyed destroyed = 1 parts
+- CT destroyed, rightleg destroyed, leftarm destroyed = 1 parts
 
 DefaultMechPartMax is set to 3:
-3 - 0,6(rightarm destroyed) - 0,6(rightleg destroyed) = 1,8 rounded to 2 parts
+- 3 - 0,6(rightarm destroyed) - 0,6(rightleg destroyed) = 1,8 rounded to 2 parts
 
 ## Download
 Downloads can be found on [github](https://github.com/Morphyum/AdjustedMechSalvage/releases).
