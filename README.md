@@ -10,11 +10,17 @@ AdjustedMechSalvage is a BattleTech mod (using ModTek) that changes the rules th
 ## Features
 - Your own mechs now get destroyed and leave behind salvage.
 - Number of salvage is now based the number of parts you destroyed.
-- You get: DefaultMechPartMax(number needed to assemble a mech) - (DefaultMechPartMax / 5) parts || (for each arm,leg or the CT the target lost).
+- You get DefaultMechPartMax(number needed to assemble a mech) - DefaultMechPartMax / 5 parts for each arm or leg the target lost.
+- CT lost is 1 parts
 
 ## Example: 
 DefaultMechPartMax is set to 5:
-5 - 1(leftleg destroyed) - 1(CT destroyed) = 3 parts
+5 - 1(leftleg destroyed) - 1(Rightleg destroyed) = 3 parts
+
+DefaultMechPartMax is set to 3 or 5:
+CT destroyed, rightleg destroyed = 1 parts
+CT destroyed destroyed = 1 parts
+CT destroyed, rightleg destroyed, leftarm destroyed = 1 parts
 
 DefaultMechPartMax is set to 3:
 3 - 0,6(rightarm destroyed) - 0,6(rightleg destroyed) = 1,8 rounded to 2 parts
