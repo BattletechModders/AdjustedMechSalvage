@@ -24,9 +24,23 @@ namespace AdjustedMechSalvage {
                 SimGameConstants constants = simulation.Constants;
                 for (int i = 0; i < lostUnits.Count; i++) {
                     MechDef mech = lostUnits[i].mech;
+                    Pilot pilot = lostUnits[i].pilot;
                     float num = simulation.NetworkRandom.Float(0f, 1f);
-                    bool flag = num <= constants.Salvage.DestroyedMechRecoveryChance;
-                    if (flag) {
+                    float ejectRecoveryBonus = 0;
+                    float incapacitatedRecoveryBonus = 0;              
+                    if (pilot.HasEjected) {
+                        ejectRecoveryBonus = settings.ejectRecoveryBonus;
+                    } else if (pilot.IsIncapacitated) {
+                        incapacitatedRecoveryBonus = settings.incapacitatedRecoveryBonus;
+                    }
+                    bool flag = num  <= constants.Salvage.DestroyedMechRecoveryChance + ejectRecoveryBonus + incapacitatedRecoveryBonus;
+
+                    if (flag ||
+                        (!mech.IsLocationDestroyed(ChassisLocations.CenterTorso) &&
+                        !mech.IsLocationDestroyed(ChassisLocations.Head) &&
+                        (!mech.IsLocationDestroyed(ChassisLocations.LeftLeg) && !mech.IsLocationDestroyed(ChassisLocations.RightLeg)) &&
+                        !pilot.IsIncapacitated
+                        )) {
                         lostUnits[i].mechLost = false;
                     }
                     else {
@@ -34,23 +48,25 @@ namespace AdjustedMechSalvage {
 
                         float mechparts = simulation.Constants.Story.DefaultMechPartMax;
                         if (mech.IsLocationDestroyed(ChassisLocations.CenterTorso)) {
-                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                            mechparts = 1;
                         }
-                        if (mech.IsLocationDestroyed(ChassisLocations.LeftArm)) {
-                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
-                        }
-                        if (mech.IsLocationDestroyed(ChassisLocations.RightArm)) {
-                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
-                        }
-                        if (mech.IsLocationDestroyed(ChassisLocations.LeftLeg)) {
-                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
-                        }
-                        if (mech.IsLocationDestroyed(ChassisLocations.RightLeg)) {
-                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                        else {
+                            if (mech.IsLocationDestroyed(ChassisLocations.LeftArm)) {
+                                mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                            }
+                            if (mech.IsLocationDestroyed(ChassisLocations.RightArm)) {
+                                mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                            }
+                            if (mech.IsLocationDestroyed(ChassisLocations.LeftLeg)) {
+                                mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                            }
+                            if (mech.IsLocationDestroyed(ChassisLocations.RightLeg)) {
+                                mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                            }
                         }
 
 
-                        SalvageDef def = Helper.CreateMechPart(__instance, constants, mech);
+                        SalvageDef def = (SalvageDef)ReflectionHelper.InvokePrivateMethode(__instance, "CreateMechPart", new object[] { constants, mech });
                         if (settings.ownMechsForFree) {
                             for (int s = 0; s < Mathf.RoundToInt(mechparts); s++) {
                                 __instance.SalvageResults.Add(def);
@@ -97,19 +113,21 @@ namespace AdjustedMechSalvage {
                     if (pilot.IsIncapacitated || mech2.IsDestroyed) {
                         float mechparts = simulation.Constants.Story.DefaultMechPartMax;
                         if (mech2.IsLocationDestroyed(ChassisLocations.CenterTorso)) {
-                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                            mechparts = 1;
                         }
-                        if (mech2.IsLocationDestroyed(ChassisLocations.LeftArm)) {
-                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
-                        }
-                        if (mech2.IsLocationDestroyed(ChassisLocations.RightArm)) {
-                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
-                        }
-                        if (mech2.IsLocationDestroyed(ChassisLocations.LeftLeg)) {
-                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
-                        }
-                        if (mech2.IsLocationDestroyed(ChassisLocations.RightLeg)) {
-                            mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                        else {
+                            if (mech2.IsLocationDestroyed(ChassisLocations.LeftArm)) {
+                                mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                            }
+                            if (mech2.IsLocationDestroyed(ChassisLocations.RightArm)) {
+                                mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                            }
+                            if (mech2.IsLocationDestroyed(ChassisLocations.LeftLeg)) {
+                                mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                            }
+                            if (mech2.IsLocationDestroyed(ChassisLocations.RightLeg)) {
+                                mechparts -= (simulation.Constants.Story.DefaultMechPartMax / 5);
+                            }
                         }
 
                         ReflectionHelper.InvokePrivateMethode(__instance, "CreateAndAddMechPart", new object[] { constants, mech2, Mathf.RoundToInt(mechparts), finalPotentialSalvage });
