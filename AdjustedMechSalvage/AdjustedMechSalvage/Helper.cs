@@ -8,7 +8,7 @@ namespace AdjustedMechSalvage {
 
         public static Settings LoadSettings() {
             try {
-                using (StreamReader r = new StreamReader("mods/AdjustedMechSalvage/settings.json")) {
+                using (StreamReader r = new StreamReader($"{AdjustedMechSalvage.ModDirectory}/settings.json")) {
                     string json = r.ReadToEnd();
                     return JsonConvert.DeserializeObject<Settings>(json);
                 }
