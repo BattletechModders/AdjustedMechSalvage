@@ -1,0 +1,7 @@
+{
+	"ownMechsForFree" : false,
+	"ejectRecoveryBonus" : 0,
+    "incapacitatedRecoveryBonus" : 0,
+	"centerTorsoHasCustomSalvageValue" : false,
+    "centerTorsoCustomSalvageValue" : 0
+}
