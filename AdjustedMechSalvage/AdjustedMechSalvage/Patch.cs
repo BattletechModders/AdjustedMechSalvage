@@ -35,12 +35,10 @@ namespace AdjustedMechSalvage {
                     }
                     bool flag = num  <= constants.Salvage.DestroyedMechRecoveryChance + ejectRecoveryBonus + incapacitatedRecoveryBonus;
 
-                    if (flag ||
-                        (!mech.IsLocationDestroyed(ChassisLocations.CenterTorso) &&
-                        !mech.IsLocationDestroyed(ChassisLocations.Head) &&
-                        (!mech.IsLocationDestroyed(ChassisLocations.LeftLeg) && !mech.IsLocationDestroyed(ChassisLocations.RightLeg)) &&
-                        !pilot.IsIncapacitated
-                        )) {
+                    // keep mech if the roll is good enough, or if CT + head + legs are intact, and the pilot isn't incapacitated
+                    if (flag || 
+                       (!mech.IsLocationDestroyed(ChassisLocations.CenterTorso) && !mech.IsLocationDestroyed(ChassisLocations.Head) && 
+                       (!mech.IsLocationDestroyed(ChassisLocations.LeftLeg) && !mech.IsLocationDestroyed(ChassisLocations.RightLeg)) && !pilot.IsIncapacitated )) {
                         lostUnits[i].mechLost = false;
                     }
                     else {
@@ -48,7 +46,10 @@ namespace AdjustedMechSalvage {
 
                         float mechparts = simulation.Constants.Story.DefaultMechPartMax;
                         if (mech.IsLocationDestroyed(ChassisLocations.CenterTorso)) {
-                            mechparts = 1;
+                            if (settings.centerTorsoHasCustomSalvageValue)
+                                mechparts = settings.centerTorsoCustomSalvageValue;
+                            else
+                                mechparts = 1;
                         }
                         else {
                             if (mech.IsLocationDestroyed(ChassisLocations.LeftArm)) {
@@ -113,7 +114,10 @@ namespace AdjustedMechSalvage {
                     if (pilot.IsIncapacitated || mech2.IsDestroyed) {
                         float mechparts = simulation.Constants.Story.DefaultMechPartMax;
                         if (mech2.IsLocationDestroyed(ChassisLocations.CenterTorso)) {
-                            mechparts = 1;
+                            if (settings.centerTorsoHasCustomSalvageValue)
+                                mechparts = settings.centerTorsoCustomSalvageValue;
+                            else
+                                mechparts = 1;
                         }
                         else {
                             if (mech2.IsLocationDestroyed(ChassisLocations.LeftArm)) {
