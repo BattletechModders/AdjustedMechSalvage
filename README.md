@@ -34,7 +34,7 @@ Downloads can be found on [github](https://github.com/Morphyum/AdjustedMechSalva
 - ownMechsForFree - bool - default false - Places the parts of the mechs you loose yourself directly into your inventory instead of making you salvage them.
 - ejectRecoveryBonus - float - default 0.75 - Flat Bonus to your recovery chance if you punshed out.
 - incapacitatedRecoveryBonus - float - default 0.5 - Flat Bonus to your recovery chance if pilot got incapacitated.
-- centerTorsoSalvageValue" - float - default 0 - Sets how much salvage is generated from a mech with center torso destroyed.
+- centerTorsoSalvageValue" - float - default 1 - Sets how much salvage is generated from a mech with center torso destroyed.
 
 Example: RecoveryRate set to 0.5 -> Can rolls 0-1 0.6 -> eject bonus is 0.15 -> 0.5 + 0.15 = 0.65 -> 0.6 is smaller then 0.65 so mech is recovered
        
