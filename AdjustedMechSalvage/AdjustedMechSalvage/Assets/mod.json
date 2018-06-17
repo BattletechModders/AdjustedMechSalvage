@@ -2,11 +2,11 @@
     "Name": "AdjustedMechSalvage",
     "Enabled": true,
 
-    "Version": "0.4.1",
+    "Version": "0.5",
     "Description": "Adjusting Generated Salvage for mech parts.",
     "Author": "Morphyum",
     "Website": "https://github.com/Morphyum/AdjustedMechSalvage",
     "Contact": "",
-	
-	"DLL": "AdjustedMechSalvage.dll",
+  "Settings": {},
+	"DLL": "AdjustedMechSalvage.dll"
 }

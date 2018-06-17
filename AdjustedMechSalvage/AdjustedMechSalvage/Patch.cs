@@ -46,10 +46,7 @@ namespace AdjustedMechSalvage {
 
                         float mechparts = simulation.Constants.Story.DefaultMechPartMax;
                         if (mech.IsLocationDestroyed(ChassisLocations.CenterTorso)) {
-                            if (settings.centerTorsoHasCustomSalvageValue)
-                                mechparts = settings.centerTorsoCustomSalvageValue;
-                            else
-                                mechparts = 1;
+                                mechparts = settings.centerTorsoSalvageValue;
                         }
                         else {
                             if (mech.IsLocationDestroyed(ChassisLocations.LeftArm)) {
@@ -114,10 +111,7 @@ namespace AdjustedMechSalvage {
                     if (pilot.IsIncapacitated || mech2.IsDestroyed) {
                         float mechparts = simulation.Constants.Story.DefaultMechPartMax;
                         if (mech2.IsLocationDestroyed(ChassisLocations.CenterTorso)) {
-                            if (settings.centerTorsoHasCustomSalvageValue)
-                                mechparts = settings.centerTorsoCustomSalvageValue;
-                            else
-                                mechparts = 1;
+                                mechparts = settings.centerTorsoSalvageValue;
                         }
                         else {
                             if (mech2.IsLocationDestroyed(ChassisLocations.LeftArm)) {
