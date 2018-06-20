@@ -27,18 +27,18 @@ namespace AdjustedMechSalvage {
                     Pilot pilot = lostUnits[i].pilot;
                     float num = simulation.NetworkRandom.Float(0f, 1f);
                     float ejectRecoveryBonus = 0;
-                    float incapacitatedRecoveryBonus = 0;              
+                    float incapacitatedRecoveryBonus = 0;
+                    bool notDestroyed = !mech.IsLocationDestroyed(ChassisLocations.CenterTorso) && !mech.IsLocationDestroyed(ChassisLocations.Head) &&
+                       (!mech.IsLocationDestroyed(ChassisLocations.LeftLeg) && !mech.IsLocationDestroyed(ChassisLocations.RightLeg));
                     if (pilot.HasEjected) {
                         ejectRecoveryBonus = settings.ejectRecoveryBonus;
-                    } else if (pilot.IsIncapacitated) {
+                    } else if (mech.IsLocationDestroyed(ChassisLocations.Head) || (pilot.IsIncapacitated && notDestroyed)) {
                         incapacitatedRecoveryBonus = settings.incapacitatedRecoveryBonus;
                     }
                     bool flag = num  <= constants.Salvage.DestroyedMechRecoveryChance + ejectRecoveryBonus + incapacitatedRecoveryBonus;
 
-                    // keep mech if the roll is good enough, or if CT + head + legs are intact, and the pilot isn't incapacitated
-                    if (flag || 
-                       (!mech.IsLocationDestroyed(ChassisLocations.CenterTorso) && !mech.IsLocationDestroyed(ChassisLocations.Head) && 
-                       (!mech.IsLocationDestroyed(ChassisLocations.LeftLeg) && !mech.IsLocationDestroyed(ChassisLocations.RightLeg)) && !pilot.IsIncapacitated )) {
+                    // keep mech if the roll is good enough, or if CT + head + legs are intact and the pilot isn't incapacitated
+                    if (flag || (notDestroyed && !pilot.IsIncapacitated )) {
                         lostUnits[i].mechLost = false;
                     }
                     else {
