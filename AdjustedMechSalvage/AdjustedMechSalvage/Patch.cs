@@ -4,6 +4,7 @@ using HBS;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace AdjustedMechSalvage {
@@ -108,7 +109,7 @@ namespace AdjustedMechSalvage {
                     bool flag3 = false;
                     List<SalvageDef> finalPotentialSalvage = (List<SalvageDef>)ReflectionHelper.GetPrivateField(__instance, "finalPotentialSalvage");
 
-                    if (pilot.IsIncapacitated || mech2.IsDestroyed) {
+                    if (pilot.IsIncapacitated || mech2.IsDestroyed || mech2.Inventory.Any(cref => cref.Def != null && cref.Def.CriticalComponent && cref.DamageLevel == ComponentDamageLevel.Destroyed)) {
                         float mechparts = simulation.Constants.Story.DefaultMechPartMax;
                         if (mech2.IsLocationDestroyed(ChassisLocations.CenterTorso)) {
                                 mechparts = settings.centerTorsoSalvageValue;
